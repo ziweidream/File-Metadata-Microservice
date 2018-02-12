@@ -18,22 +18,14 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/dreams", function (request, response) {
-  response.send(dreams);
-});
 
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-app.post("/dreams", function (request, response) {
-  dreams.push(request.query.dream);
-  response.sendStatus(200);
-});
 
 app.post('/', multer({ dest: './uploads/'}).single('fileToUpload'), function(req,res){
 	console.log(req.body); //form fields
 	/* example output:
 	{ title: 'abc' }
 	 */
-	res.end(req.file); //form files
+	console.log(req.file); //form files
 	/* example output:
             { fieldname: 'upl',
               originalname: 'grumpy.png',
