@@ -1,8 +1,26 @@
 var multer = require('multer');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var path = require('path');
 var express = require('express');
 var app = express();
 
+var rmDir = function(dirPath, removeSelf) {
+      if (removeSelf === undefined)
+        removeSelf = true;
+      try { var files = fs.readdirSync(dirPath); }
+      catch(e) { return; }
+      if (files.length > 0)
+        for (var i = 0; i < files.length; i++) {
+          var filePath = dirPath + '/' + files[i];
+          if (fs.statSync(filePath).isFile())
+            fs.unlinkSync(filePath);
+          else
+            rmDir(filePath);
+        }
+      if (removeSelf)
+        fs.rmdirSync(dirPath);
+    };
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -12,7 +30,7 @@ app.get("/", function(request, response) {
 });
 
 app.get("/delete", function(req, res) {
-  
+  rmDir('./uploads', false);
 });
 
 app.post('/', multer({dest: './uploads/'}).single('fileToUpload'), function(req, res) {
