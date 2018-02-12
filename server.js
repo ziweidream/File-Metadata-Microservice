@@ -4,7 +4,8 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var app = express();
-
+//rmDir is based on the code in this GitHub post at https://gist.github.com/liangzan/807712/8fb16263cb39e8472d17aea760b6b1492c465af2
+//on 11 Feb, 2018
 var rmDir = function(dirPath, removeSelf) {
       if (removeSelf === undefined)
         removeSelf = true;
