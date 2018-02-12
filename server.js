@@ -3,11 +3,16 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get("/", function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
+});
+
+app.get("/delete", function(req, res) {
+  
 });
 
 app.post('/', multer({dest: './uploads/'}).single('fileToUpload'), function(req, res) {
